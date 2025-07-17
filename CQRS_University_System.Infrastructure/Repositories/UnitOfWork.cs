@@ -11,20 +11,20 @@ namespace CQRS_University_System.Infrastructure.Repositories
     public class UnitOfWork : IUnitOfWork
     {
         private readonly AppDbContext _context;
-        public IStudentRepository StudentRepository { get; private set; }
-        public ICourseRepository CourseRepository { get; private set; }
-        public IDepartmentRepository DepartmentRepository { get; private set; }
+        public IStudentRepository Students { get; private set; }
+        public ICourseRepository Courses { get; private set; }
+        public IDepartmentRepository Departments { get; private set; }
 
 
         public UnitOfWork(AppDbContext context,
-            IStudentRepository studentRepository,
-            ICourseRepository courseRepository,
-            IDepartmentRepository departmentRepository)
+            IStudentRepository students,
+            ICourseRepository courses,
+            IDepartmentRepository departments)
         {
             _context = context;
-            StudentRepository = studentRepository;
-            CourseRepository = courseRepository;
-            DepartmentRepository = departmentRepository;
+            Students = students;
+            Courses = courses;
+            Departments = departments;
         }
 
 

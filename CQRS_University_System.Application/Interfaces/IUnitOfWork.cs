@@ -8,9 +8,9 @@ namespace CQRS_University_System.Application.Interfaces
 {
     public interface IUnitOfWork : IDisposable
     {
-        IStudentRepository StudentRepository { get; }
-        ICourseRepository CourseRepository { get; }
-        IDepartmentRepository DepartmentRepository { get; }
+        IStudentRepository Students { get; }
+        ICourseRepository Courses { get; }
+        IDepartmentRepository Departments { get; }
         Task<int> SaveChangesAsync(CancellationToken token);
     }
 }
