@@ -23,12 +23,12 @@ namespace CQRS_University_System.Infrastructure.Repositories
 
         public async Task<T?> GetById(int Id,
             CancellationToken token,
-            List<Func<IQueryable<T>, IIncludableQueryable<T, object>>>? IncludeExpressions)
+            QueryFilterModel<T>? filterModel)
         {
             IQueryable<T> query = _context.Set<T>().AsQueryable();
 
-            if (IncludeExpressions is not null)
-                foreach (var include in IncludeExpressions)
+            if (filterModel is not null && filterModel.IncludeExpressions is not null)
+                foreach (var include in filterModel.IncludeExpressions)
                     query = include(query);
 
             return await query.SingleOrDefaultAsync(e => EF.Property<int>(e, "Id") == Id, token);
@@ -40,12 +40,12 @@ namespace CQRS_University_System.Infrastructure.Repositories
         {
             IQueryable<T> query = _context.Set<T>().AsQueryable();
 
-            if (filterModel.search.Count > 0)
+            if (filterModel.search.Any())
                 foreach (var filter in filterModel.search)
-                    query.Where(filter);
+                    query = query.Where(filter);
 
             if (filterModel.skip.HasValue)
-                query.Skip(filterModel.skip.Value)
+                query = query.Skip(filterModel.skip.Value)
                     .Take(filterModel.take);
 
             if (filterModel.orderBy is not null)

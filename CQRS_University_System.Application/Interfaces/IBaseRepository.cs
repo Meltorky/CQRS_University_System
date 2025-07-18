@@ -13,7 +13,7 @@ namespace CQRS_University_System.Application.Interfaces
         Task<T?> GetById(
             int Id,
             CancellationToken token,
-            List<Func<IQueryable<T>, IIncludableQueryable<T, object>>>? IncludeExpressions);
+            QueryFilterModel<T>? filterModel);
 
         Task<List<T>> Filter(CancellationToken token, QueryFilterModel<T> filterModel);
 

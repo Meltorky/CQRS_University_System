@@ -26,5 +26,17 @@ namespace CQRS_University_System.Application.Mappers
             }
             return dtos; 
         }
+
+        public static CourseDTO ToCourseDTO(this Course course)
+        {
+            return new CourseDTO() 
+            {
+                Id = course.Id,
+                Name = course.Name,
+                Credits = course.Credits,
+                CourseCode = course.CourseCode,
+                Description = course.Description,              
+            };
+        }
     }
 }
