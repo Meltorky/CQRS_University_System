@@ -19,7 +19,7 @@ namespace CQRS_University_System.Application.Interfaces
 
         Task<List<T>> GetAll(CancellationToken token);
 
-        Task<bool> Add(T entity, CancellationToken token);
+        Task<T> Add(T entity, CancellationToken token);
 
         Task<bool> Update(T entity, CancellationToken token);
 

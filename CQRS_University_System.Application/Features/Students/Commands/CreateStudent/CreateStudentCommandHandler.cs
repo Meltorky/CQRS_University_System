@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CQRS_University_System.Application.Features.Students.Commands.CreateStudent
 {
-    internal class CreateStudentCommandHandler
+    public class CreateStudentCommandHandler
     {
     }
 }

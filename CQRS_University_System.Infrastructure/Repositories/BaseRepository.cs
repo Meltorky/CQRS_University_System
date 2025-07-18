@@ -73,10 +73,11 @@ namespace CQRS_University_System.Infrastructure.Repositories
 
 
 
-        public async Task<bool> Add(T entity, CancellationToken token)
+        public async Task<T> Add(T entity, CancellationToken token)
         {
-            await _context.Set<T>().AddAsync(entity, token);
-            return await _context.SaveChangesAsync(token) > 0;
+            var result = await _context.Set<T>().AddAsync(entity, token);
+            await _context.SaveChangesAsync(token);
+            return result.Entity;
         }
 
 

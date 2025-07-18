@@ -8,7 +8,7 @@ using MediatR;
 namespace CQRS_University_System.Application.Abstractions.CQRS
 {
     public interface ICommandHandler<TCommand,TResponse> : IRequestHandler<TCommand,TResponse> 
-        where TCommand : IRequest<TResponse>
+        where TCommand : ICommand<TResponse>
     {
     }
 }
