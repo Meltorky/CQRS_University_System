@@ -13,7 +13,7 @@ namespace CQRS_University_System.Application.Interfaces
         Task<T?> GetById(
             int Id,
             CancellationToken token,
-            QueryFilterModel<T>? filterModel);
+            QueryFilterModel<T>? filterModel = null);
 
         Task<List<T>> Filter(CancellationToken token, QueryFilterModel<T> filterModel);
 
@@ -24,5 +24,7 @@ namespace CQRS_University_System.Application.Interfaces
         Task<bool> Update(T entity, CancellationToken token);
 
         Task<bool> Delete(T entity, CancellationToken token);
+
+        Task<bool> IsExist(int Id, CancellationToken token);
     }
 }

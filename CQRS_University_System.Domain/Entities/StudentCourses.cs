@@ -9,9 +9,9 @@ namespace CQRS_University_System.Domain.Entities
     public class StudentCourses
     {
         public int StudentId { get; set; }
-        public Student Student { get; set; } = new();
+        public Student Student { get; set; } = default!;
 
         public int CourseId { get; set; }
-        public Course Course { get; set; } = new();
+        public Course Course { get; set; } = default!;
     }
 }

@@ -11,6 +11,7 @@ namespace CQRS_University_System.Application.Features.Students.Queries.GetStuden
     {
         public GetStudentCoursesValidator()
         {
+            Console.WriteLine("################### Validator ###########################################");
             RuleFor(e => e.Id).NotEmpty().NotNull().GreaterThan(0);
         }
     }

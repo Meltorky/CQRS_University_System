@@ -1,10 +1,11 @@
-﻿using CQRS_University_System.Application.Features.Students.Queries.FilterStudents;
+﻿using CQRS_University_System.Application.DTOs.Students;
+using CQRS_University_System.Application.Features.Students.Commands.CreateStudent;
+using CQRS_University_System.Application.Features.Students.Queries.FilterStudents;
 using CQRS_University_System.Application.Features.Students.Queries.GetAllStudents;
 using CQRS_University_System.Application.Features.Students.Queries.GetStudentCourses;
 using CQRS_University_System.Domain.Commons;
 using CQRS_University_System.Domain.Entities;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CQRS_University_System.API.Controllers
@@ -64,6 +65,14 @@ namespace CQRS_University_System.API.Controllers
 
             var query = new FilterStudentsQuery() {filterModel = filter };
             var result = await _mediator.Send(query, token);
+            return Ok(result);
+        }
+
+        [HttpPost("create")]
+        public async Task<IActionResult> Create([FromForm] CreateStudentDTO dTO ,CancellationToken token) 
+        {
+            var command = new CreateStudentCommand() { dto = dTO};
+            var result = await _mediator.Send(command, token);
             return Ok(result);
         }
 

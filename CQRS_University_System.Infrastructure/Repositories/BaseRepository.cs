@@ -23,7 +23,7 @@ namespace CQRS_University_System.Infrastructure.Repositories
 
         public async Task<T?> GetById(int Id,
             CancellationToken token,
-            QueryFilterModel<T>? filterModel)
+            QueryFilterModel<T>? filterModel = null)
         {
             IQueryable<T> query = _context.Set<T>().AsQueryable();
 
@@ -94,6 +94,14 @@ namespace CQRS_University_System.Infrastructure.Repositories
         {
             _context.Set<T>().Remove(entity);
             return await _context.SaveChangesAsync(token) > 0;
+        }
+
+
+
+        public async Task<bool> IsExist(int Id , CancellationToken token) 
+        {
+            var result = await _context.Set<T>().SingleOrDefaultAsync(e => EF.Property<int>(e,"Id") == Id , token);
+            return result is not null;
         }
 
     }

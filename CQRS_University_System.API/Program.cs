@@ -1,3 +1,4 @@
+using CQRS_University_System.API.Middlewares;
 using CQRS_University_System.Application;
 using CQRS_University_System.Application.Abstractions.CQRS;
 using CQRS_University_System.Application.Interfaces;
@@ -24,6 +25,7 @@ builder.Services.AddMediatR(config =>
 {
     config.RegisterServicesFromAssembly(typeof(ApplicationAssemblyReference).Assembly);
 });
+builder.Services.AddValidatorsFromAssembly(typeof(ApplicationAssemblyReference).Assembly); // Use a marker interface if needed
 
 
 // Inject System Services
@@ -40,6 +42,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+// registering the Global Exception Handling Middleware.
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.UseHttpsRedirection();
 

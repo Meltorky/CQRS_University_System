@@ -34,7 +34,7 @@ namespace CQRS_University_System.Domain.Entities
 
         [ForeignKey("Department")]
         public int DepartmentId { get; set; }
-        public Department Department { get; set; } = new();
+        public Department Department { get; set; } = default!;
 
         // many-to-many 
         public ICollection<StudentCourses> StudentCourses { get; set; } = new List<StudentCourses>();
