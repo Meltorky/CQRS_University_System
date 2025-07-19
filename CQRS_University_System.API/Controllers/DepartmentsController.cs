@@ -1,10 +1,10 @@
-﻿using CQRS_University_System.Application.Features.Departments.Commands.CreateDepartment;
-using CQRS_University_System.Application.Features.Departments.Queries;
+﻿using CQRS_University_System.Application.Features.Courses.Commands.RemoveCourse;
+using CQRS_University_System.Application.Features.Departments.Commands.CreateDepartment;
+using CQRS_University_System.Application.Features.Departments.Commands.RemoveDepartment;
 using CQRS_University_System.Application.Features.Departments.Queries.GetAllDepartments;
 using CQRS_University_System.Application.Features.Departments.Queries.GetDepartmentCourses;
 using CQRS_University_System.Application.Features.Departments.Queries.GetDepartmentStudents;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CQRS_University_System.API.Controllers
@@ -20,7 +20,7 @@ namespace CQRS_University_System.API.Controllers
         }
 
 
-        [HttpGet]
+        [HttpGet("all")]
         public async Task<IActionResult> GetAllDepartments(CancellationToken cancellationToken)
         {
             var query = new GetAllDepartmentsQuery();
@@ -50,6 +50,16 @@ namespace CQRS_University_System.API.Controllers
             var comand = new CreateDepartmentCommand { Name = name };
             var result = await _mediator.Send(comand , token);
             return Ok(result);
+        }
+
+        [HttpDelete("delete")]
+        public async Task<IActionResult> Delete([FromRoute] int Id, CancellationToken token)
+        {
+            var command = new RemoveDepartmentCommand() { Id = Id };
+            var result = await _mediator.Send(command, token);
+            return result ?
+                Ok($"Successfully delete Department with ID: {Id}") :
+                throw new ArgumentException();
         }
     }
 }

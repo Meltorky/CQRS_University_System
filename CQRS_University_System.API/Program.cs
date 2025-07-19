@@ -1,6 +1,5 @@
 using CQRS_University_System.API.Middlewares;
 using CQRS_University_System.Application;
-using CQRS_University_System.Application.Abstractions.CQRS;
 using CQRS_University_System.Application.Interfaces;
 using CQRS_University_System.Infrastructure.Data;
 using CQRS_University_System.Infrastructure.Repositories;

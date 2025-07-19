@@ -38,5 +38,18 @@ namespace CQRS_University_System.Application.Mappers
                 Description = course.Description,              
             };
         }
+
+
+        public static Course ToCourse(this CreateCourseDTO course)
+        {
+            return new Course()
+            {
+                Name = course.Name,
+                Credits = course.Credits,
+                CourseCode = course.CourseCode,
+                Description = course.Description,  
+                DepartmentId = course.DepartmentId,
+            };
+        }
     }
 }
