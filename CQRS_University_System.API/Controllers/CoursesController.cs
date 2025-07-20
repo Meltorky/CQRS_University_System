@@ -19,7 +19,12 @@ namespace CQRS_University_System.API.Controllers
         }
 
 
-
+        /// <summary>
+        /// Sasso manga
+        /// </summary>
+        /// <param name="Id">id of course</param>
+        /// <param name="token"></param>
+        /// <response code="200">Returns the choosen Course</response>
         [HttpGet("{Id}")]
         public async Task<IActionResult> GetCourseById([FromRoute] int Id, CancellationToken token)
         {

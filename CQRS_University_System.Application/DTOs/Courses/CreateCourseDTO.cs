@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace CQRS_University_System.Application.DTOs.Courses
 {
@@ -6,6 +7,7 @@ namespace CQRS_University_System.Application.DTOs.Courses
     {
         [Required]
         [MaxLength(100, ErrorMessage = "Max. Length is 100")]
+        [SwaggerSchema(Description = "Enter the date in format yyyy-MM-dd")]
         public string Name { get; set; } = string.Empty;
 
         [Required]
