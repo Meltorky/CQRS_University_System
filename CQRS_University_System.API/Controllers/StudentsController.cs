@@ -12,9 +12,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CQRS_University_System.API.Controllers
 {
-    /// <summary>
-    /// Handles operations related to students.
-    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class StudentsController : ControllerBase
@@ -24,6 +21,8 @@ namespace CQRS_University_System.API.Controllers
         {
             _mediator = mediator;
         }
+
+
 
         /// <summary>
         /// Get a specific student by ID.
@@ -39,6 +38,8 @@ namespace CQRS_University_System.API.Controllers
             return Ok(result);
         }
 
+
+
         /// <summary>
         /// Get all students.
         /// </summary>
@@ -51,6 +52,8 @@ namespace CQRS_University_System.API.Controllers
             var result = await _mediator.Send(query, token);
             return Ok(result);
         }
+
+
 
         /// <summary>
         /// Get courses registered by a specific student.
@@ -65,6 +68,8 @@ namespace CQRS_University_System.API.Controllers
             var result = await _mediator.Send(query, token);
             return Ok(result);
         }
+
+
 
         /// <summary>
         /// Filter students based on search, sort, and pagination options.
@@ -105,6 +110,8 @@ namespace CQRS_University_System.API.Controllers
             return Ok(result);
         }
 
+
+
         /// <summary>
         /// Create a new student.
         /// </summary>
@@ -118,6 +125,8 @@ namespace CQRS_University_System.API.Controllers
             var result = await _mediator.Send(command, token);
             return Ok(result);
         }
+
+
 
         /// <summary>
         /// Delete a student by ID.

@@ -18,6 +18,8 @@ namespace CQRS_University_System.API.Controllers
             _mediator = mediator;
         }
 
+
+
         /// <summary>
         /// Retrieves the details of a course by its unique ID.
         /// </summary>
@@ -34,6 +36,8 @@ namespace CQRS_University_System.API.Controllers
             return Ok(result);
         }
 
+
+
         /// <summary>
         /// Retrieves a list of students enrolled in the specified course.
         /// </summary>
@@ -49,6 +53,8 @@ namespace CQRS_University_System.API.Controllers
             var result = await _mediator.Send(query, token);
             return Ok(result);
         }
+
+
 
         /// <summary>
         /// Creates a new course with the provided data.
@@ -68,6 +74,8 @@ namespace CQRS_University_System.API.Controllers
                 new { Id = result.Id },
                 result);
         }
+
+
 
         /// <summary>
         /// Deletes the specified course by its ID.
