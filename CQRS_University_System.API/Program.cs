@@ -1,9 +1,12 @@
+using CQRS_University_System.API.Extensions;
 using CQRS_University_System.API.Middlewares;
 using CQRS_University_System.Application;
 using CQRS_University_System.Application.Interfaces;
+using CQRS_University_System.Domain.Identity;
 using CQRS_University_System.Infrastructure.Data;
 using CQRS_University_System.Infrastructure.Repositories;
 using FluentValidation;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -26,11 +29,26 @@ builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(
     builder.Configuration.GetConnectionString("DefaultConnection")));
 
 
+// Add Identity
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>(o =>
+{
+    o.Password.RequireDigit = true;
+    o.Password.RequireLowercase = true;
+    o.Password.RequireUppercase = true;
+    o.Password.RequireNonAlphanumeric = true;
+    o.Password.RequiredLength = 8;
+}).AddEntityFrameworkStores<AppDbContext>();
+
+
 builder.Services.AddMediatR(config =>
 {
     config.RegisterServicesFromAssembly(typeof(ApplicationAssemblyReference).Assembly);
 });
 builder.Services.AddValidatorsFromAssembly(typeof(ApplicationAssemblyReference).Assembly); // Use a marker interface if needed
+
+
+// Add JWT authentication in program.cs
+builder.Services.AddJwtAuthentication(builder.Configuration);
 
 
 // Inject System Services
@@ -56,5 +74,8 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+// Seed Identity Default Roles and Users
+await app.Services.SeedIdentityAsync();
 
 app.Run();

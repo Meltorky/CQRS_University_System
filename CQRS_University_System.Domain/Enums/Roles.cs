@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CQRS_University_System.Domain.Enums
 {
-    enum Roles
+    public enum Roles
     {
         Admin,
         Student
