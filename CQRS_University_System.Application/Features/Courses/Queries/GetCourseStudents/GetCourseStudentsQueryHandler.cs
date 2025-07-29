@@ -31,14 +31,14 @@ namespace CQRS_University_System.Application.Features.Courses.Queries.GetCourseS
             }
 
             var query = new QueryFilterModel<Course>();
-            query.AddInclude(q => q.Include(c => c.StudentCourses).ThenInclude(x => x.Course));
+            query.AddInclude(q => q.Include(c => c.StudentCourses).ThenInclude(x => x.Student));
 
             var course = await _unitOfWork.Courses.GetById(request.Id,token,query);
 
             if (course == null)
                 throw new NotFoundException($"No Course Exist with ID: {request.Id}");
 
-            return [.. course.StudentCourses.Select(sc => sc.Student.ToStudentDTO())];
+            return course.StudentCourses.Select(sc => sc.Student.ToStudentDTO()).ToList();
         }
     }
 }

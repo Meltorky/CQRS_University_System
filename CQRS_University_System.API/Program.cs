@@ -1,3 +1,5 @@
+using CQRS_University_System.API.ActionFilters;
+
 var builder = WebApplication.CreateBuilder(args);
 
 
@@ -69,7 +71,6 @@ builder.Services.AddJwtAuthentication(builder.Configuration);
 
 
 // Inject Identity Services
-builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 
 // Inject System Services
@@ -77,6 +78,11 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IStudentRepository, StudentRepository>();
 builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
 builder.Services.AddScoped<ICourseRepository, CourseRepository>();
+
+
+// Add Action Filter that calculate the time excution
+builder.Services.AddScoped<ExecutionTimeFilter>();
+
 
 var app = builder.Build();
 
@@ -86,6 +92,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+//app.UseSwagger();
+//app.UseSwaggerUI(options =>
+//{
+//    options.SwaggerEndpoint("/swagger/v1/swagger.json", "Production v1");
+//    options.RoutePrefix = string.Empty;
+//});
 
 // registering the Global Exception Handling Middleware.
 app.UseMiddleware<ExceptionHandlingMiddleware>();
