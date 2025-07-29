@@ -29,17 +29,22 @@ namespace CQRS_University_System.API.Middlewares
                 context.Response.StatusCode = StatusCodes.Status400BadRequest;
                 await context.Response.WriteAsJsonAsync(new { errors = errorMessages });
             }
-
+            catch (NotFoundException ex)
+            {
+                _logger.LogWarning(ex, "Resource not found. Path: {Path}", context.Request.Path);
+                context.Response.StatusCode = StatusCodes.Status404NotFound;
+                await context.Response.WriteAsJsonAsync(new { error = ex.Message });
+            }
             catch (ArgumentException ex)
             {
                 _logger.LogWarning(ex, "Bad request: invalid argument. Path: {Path}", context.Request.Path);
                 context.Response.StatusCode = StatusCodes.Status400BadRequest;
                 await context.Response.WriteAsJsonAsync(new { error = ex.Message });
             }
-            catch (NotFoundException ex)
+            catch (UnauthorizedAccessException ex)
             {
-                _logger.LogWarning(ex, "Resource not found. Path: {Path}", context.Request.Path);
-                context.Response.StatusCode = StatusCodes.Status404NotFound;
+                _logger.LogWarning(ex, "Unauthorized. Path: {Path}", context.Request.Path);
+                context.Response.StatusCode = StatusCodes.Status401Unauthorized;
                 await context.Response.WriteAsJsonAsync(new { error = ex.Message });
             }
             catch (OperationCanceledException ex)

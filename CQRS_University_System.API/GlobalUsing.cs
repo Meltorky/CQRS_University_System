@@ -1,0 +1,13 @@
+﻿global using CQRS_University_System.API.Extensions;
+global using CQRS_University_System.API.Middlewares;
+global using CQRS_University_System.Application;
+global using CQRS_University_System.Application.Interfaces;
+global using CQRS_University_System.Application.Interfaces.Identity;
+global using CQRS_University_System.Application.Services;
+global using CQRS_University_System.Domain.Identity;
+global using CQRS_University_System.Infrastructure.Data;
+global using CQRS_University_System.Infrastructure.Repositories;
+global using FluentValidation;
+global using Microsoft.AspNetCore.Identity;
+global using Microsoft.EntityFrameworkCore;
+global using Microsoft.OpenApi.Models;

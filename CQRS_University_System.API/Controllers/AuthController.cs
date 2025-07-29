@@ -1,16 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
-using CQRS_University_System.Application.DTOs.Auth;
-using CQRS_University_System.Application.Interfaces.Identity;
-using CQRS_University_System.Application.Options;
-using CQRS_University_System.Infrastructure.Data;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
+﻿using CQRS_University_System.Application.DTOs.Auth;
+using CQRS_University_System.Application.Features.Auth.Commands.Login;
+using CQRS_University_System.Application.Features.Auth.Commands.Register;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
+
 
 namespace CQRS_University_System.API.Controllers
 {
@@ -18,62 +11,38 @@ namespace CQRS_University_System.API.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly IAuthService _authService;
-        public AuthController(IAuthService authService)
+        private readonly IMediator _mediator;
+        public AuthController(IMediator mediator)
         {
-            _authService = authService;
+            _mediator = mediator;
         }
 
+
+        /// <summary>
+        /// Registers a new user with the provided information.
+        /// </summary>
+        /// <returns>Returns the authentication result including JWT token if successful.</returns>
+        /// <response code="200">Returns the authentication result.</response>
         [HttpPost("register")]
-        public async Task<IActionResult> RegisterAsync([FromForm] RegisterDTO dto)
+        public async Task<IActionResult> RegisterAsync([FromForm] RegisterDTO dto, CancellationToken token)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var result = await _authService.RegiesterAsync(dto);
-
-            if (!result.IsAuthenticated)
-            {
-                return BadRequest(result.Message);
-            }
-
-            if (result is null)
-            {
-                return BadRequest("Internal Service Down Yala !!");
-            }
-
+            var command = new RegisterCommand { registerDTO = dto};
+            var result = await _mediator.Send(command ,token);
             return Ok(result);
         }
 
 
-
-
-
-
-
-
+        /// <summary>
+        /// Authenticates a user with email and password.
+        /// </summary>
+        /// <returns>Returns the authentication result including JWT token if credentials are valid.</returns>
+        /// <response code="200">Returns the authentication result.</response>
+        /// <response code="404">If login fails due to invalid credentials.</response>
         [HttpPost("login")]
-        public async Task<IActionResult> LoginAsync([FromBody] LoginDTO dto)
+        public async Task<IActionResult> LoginAsync([FromBody] LoginDTO dto ,CancellationToken token)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var result = await _authService.LoginAsync(dto);
-
-            if (!result.IsAuthenticated)
-            {
-                return BadRequest(result.Message);
-            }
-
-            if (result is null)
-            {
-                return BadRequest("Internal Service Down Yala !!");
-            }
-
+            var command = new LoginCommand { loginDTO = dto };
+            var result = await _mediator.Send(command,token);
             return Ok(result);
         }
 

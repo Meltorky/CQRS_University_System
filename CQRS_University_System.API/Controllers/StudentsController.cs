@@ -7,7 +7,9 @@ using CQRS_University_System.Application.Features.Students.Queries.GetStudentByI
 using CQRS_University_System.Application.Features.Students.Queries.GetStudentCourses;
 using CQRS_University_System.Domain.Commons;
 using CQRS_University_System.Domain.Entities;
+using CQRS_University_System.Domain.Enums;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CQRS_University_System.API.Controllers
@@ -134,6 +136,7 @@ namespace CQRS_University_System.API.Controllers
         /// <param name="Id">The student's ID.</param>
         /// <param name="token">Cancellation token.</param>
         /// <returns>Status message.</returns>
+        [Authorize(Roles = nameof(Roles.Admin))]
         [HttpDelete("delete/{Id}")]
         public async Task<IActionResult> Delete([FromRoute] int Id, CancellationToken token)
         {

@@ -3,7 +3,9 @@ using CQRS_University_System.Application.Features.Departments.Commands.RemoveDep
 using CQRS_University_System.Application.Features.Departments.Queries.GetAllDepartments;
 using CQRS_University_System.Application.Features.Departments.Queries.GetDepartmentCourses;
 using CQRS_University_System.Application.Features.Departments.Queries.GetDepartmentStudents;
+using CQRS_University_System.Domain.Enums;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CQRS_University_System.API.Controllers
@@ -94,6 +96,7 @@ namespace CQRS_University_System.API.Controllers
         /// <returns>A success message if the department was deleted.</returns>
         /// <response code="200">Successfully deleted the department.</response>
         /// <response code="400">Department not found or deletion failed.</response>
+        [Authorize(Roles = nameof(Roles.Admin))]
         [HttpDelete("delete/{Id}")]
         public async Task<IActionResult> Delete([FromRoute] int Id, CancellationToken token)
         {

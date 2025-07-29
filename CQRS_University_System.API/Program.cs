@@ -1,14 +1,3 @@
-using CQRS_University_System.API.Extensions;
-using CQRS_University_System.API.Middlewares;
-using CQRS_University_System.Application;
-using CQRS_University_System.Application.Interfaces;
-using CQRS_University_System.Domain.Identity;
-using CQRS_University_System.Infrastructure.Data;
-using CQRS_University_System.Infrastructure.Repositories;
-using FluentValidation;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-
 var builder = WebApplication.CreateBuilder(args);
 
 
@@ -21,6 +10,34 @@ builder.Services.AddSwaggerGen(options =>
     var xmlFilename = $"{System.Reflection.Assembly.GetExecutingAssembly().GetName().Name}.xml";
     options.IncludeXmlComments(System.IO.Path.Combine(AppContext.BaseDirectory, xmlFilename));
     options.EnableAnnotations();
+
+
+    // Configure Swagger to use JWT tokens
+    options.SwaggerDoc("v1", new OpenApiInfo { Title = "CQRS University System", Version = "v1" });
+
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Description = "Enter JWT token like: Bearer {your token}",
+        Name = "Authorization",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.Http,
+        Scheme = "bearer"
+    });
+
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            Array.Empty<string>()
+        }
+    });
 });
 
 
@@ -50,6 +67,10 @@ builder.Services.AddValidatorsFromAssembly(typeof(ApplicationAssemblyReference).
 // Add JWT authentication in program.cs
 builder.Services.AddJwtAuthentication(builder.Configuration);
 
+
+// Inject Identity Services
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<ITokenService, TokenService>();
 
 // Inject System Services
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();

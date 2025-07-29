@@ -1,5 +1,6 @@
 ﻿using CQRS_University_System.Application.DTOs.Auth;
 using CQRS_University_System.Application.Interfaces.Identity;
+using CQRS_University_System.Domain.Enums;
 using CQRS_University_System.Domain.Identity;
 using Microsoft.AspNetCore.Identity;
 
@@ -37,10 +38,6 @@ namespace CQRS_University_System.Application.Services
 
             var result = await _userManager.CreateAsync(newUser, dto.Password);
 
-
-
-
-
             if (!result.Succeeded)
             {
                 var errors = string.Empty;
@@ -55,7 +52,7 @@ namespace CQRS_University_System.Application.Services
             }
 
 
-            await _userManager.AddToRoleAsync(newUser, "User");
+            await _userManager.AddToRoleAsync(newUser, Roles.Student.ToString());
             return await _tokenService.CreateTokenAsync(newUser);
         }
 

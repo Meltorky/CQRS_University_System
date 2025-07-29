@@ -3,7 +3,9 @@ using CQRS_University_System.Application.Features.Courses.Commands.CreateCourse;
 using CQRS_University_System.Application.Features.Courses.Commands.RemoveCourse;
 using CQRS_University_System.Application.Features.Courses.Queries.GetCourseById;
 using CQRS_University_System.Application.Features.Courses.Queries.GetCourseStudents;
+using CQRS_University_System.Domain.Enums;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CQRS_University_System.API.Controllers
@@ -85,6 +87,7 @@ namespace CQRS_University_System.API.Controllers
         /// <returns>A success message if deletion is successful.</returns>
         /// <response code="200">If the course was successfully deleted.</response>
         /// <response code="404">If the course was not found.</response>
+        [Authorize(Roles = nameof(Roles.Admin))]
         [HttpDelete("delete/{Id}")]
         public async Task<IActionResult> Delete([FromRoute] int Id, CancellationToken token)
         {
