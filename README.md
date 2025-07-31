@@ -28,39 +28,97 @@ A personal .NET 8 Web API project that manages university operations (students, 
 ## 🧱 Project Architecture
 
 ```
-📁 CQRSUniversitySystem.API
+CQRSUniversitySystem.Application Project Structure
+📁 CQRSUniversitySystem.Application
 ├── Features/
-│ ├── Auth/
-│ │ └── Commands/
-│ │ ├── Login/
-│ │ └── Register/
-│ ├── Courses/
-│ │ ├── Commands/
-│ │ └── Queries/
-│ ├── Departments/
-│ │ ├── Commands/
-│ │ └── Queries/
-│ └── Students/
-│ ├── Commands/
-│ └── Queries/
-├── Application/
-│ ├── Abstractions/
-│ │ ├── ICommand.cs
-│ │ ├── ICommandHandler.cs
-│ │ ├── IQuery.cs
-│ │ ├── IQueryHandler.cs
-│ │ ├── ITokenService.cs
-│ │ ├── IBaseRepository.cs
-│ │ ├── ICourseRepository.cs
-│ │ ├── IDepartmentRepository.cs
-│ │ ├── IStudentRepository.cs
-│ │ └── IUnitOfWork.cs
-├── Middleware/
-│ └── GlobalExceptionHandler.cs
-├── Filters/
-│ └── ExecutionTimeActionFilter.cs
+│   ├── Auth/
+│   │   └── Commands/
+│   │       ├── Login/
+│   │       │   ├── LoginCommand.cs
+│   │       │   ├── LoginCommandHandler.cs
+│   │       │   └── LoginValidator.cs
+│   │       └── Register/
+│   │           ├── RegisterCommand.cs
+│   │           ├── RegisterCommandHandler.cs
+│   │           └── RegisterValidator.cs
+│   ├── Courses/
+│   │   ├── Commands/
+│   │   │   ├── CreateCourse/
+│   │   │   │   ├── CreateCourseCommand.cs
+│   │   │   │   ├── CreateCourseCommandHandler.cs
+│   │   │   │   └── CreateCourseValidator.cs
+│   │   │   └── RemoveCourse/
+│   │   │       ├── RemoveCourseCommand.cs
+│   │   │       └── RemoveCourseCommandHandler.cs
+│   │   └── Queries/
+│   │       ├── GetCourseById/
+│   │       │   ├── GetCourseByIdQuery.cs
+│   │       │   ├── GetCourseByIdQueryHandler.cs
+│   │       │   └── GetCourseByIdValidator.cs
+│   │       └── GetCourseStudents/
+│   │           ├── GetCourseStudentsQuery.cs
+│   │           ├── GetCourseStudentsQueryHandler.cs
+│   │           └── GetCourseStudentsValidator.cs
+│   ├── Departments/
+│   │   ├── Commands/
+│   │   │   ├── CreateDepartment/
+│   │   │   │   ├── CreateDepartmentCommand.cs
+│   │   │   │   ├── CreateDepartmentCommandHandler.cs
+│   │   │   │   └── CreateDepartmentValidator.cs
+│   │   │   └── RemoveDepartment/
+│   │   │       ├── RemoveDepartmentCommand.cs
+│   │   │       └── RemoveDepartmentCommandHandler.cs
+│   │   └── Queries/
+│   │       ├── GetAllDepartments/
+│   │       │   ├── GetAllDepartmentsQuery.cs
+│   │       │   └── GetAllDepartmentsQueryHandler.cs
+│   │       ├── GetDepartmentCourses/
+│   │       │   ├── GetDepartmentCoursesQuery.cs
+│   │       │   └── GetDepartmentCoursesQueryHandler.cs
+│   │       └── GetDepartmentStudents/
+│   │           ├── GetDepartmentStudentsQuery.cs
+│   │           └── GetDepartmentStudentsQueryHandler.cs
+│   └── Students/
+│       ├── Commands/
+│       │   ├── CreateStudent/
+│       │   │   ├── CreateStudentCommand.cs
+│       │   │   ├── CreateStudentCommandHandler.cs
+│       │   │   └── CreateStudentValidator.cs
+│       │   └── RemoveStudent/
+│       │       ├── RemoveStudentCommand.cs
+│       │       └── RemoveStudentCommandHandler.cs
+│       └── Queries/
+│           ├── FilterStudents/
+│           │   ├── FilterStudentsQuery.cs
+│           │   └── FilterStudentsQueryHandler.cs
+│           ├── GetAllStudents/
+│           │   ├── GetAllStudentsQuery.cs
+│           │   └── GetAllStudentsQueryHandler.cs
+│           ├── GetStudentById/
+│           │   ├── GetStudentByIdQuery.cs
+│           │   ├── GetStudentByIdQueryHandler.cs
+│           │   └── GetStudentByIdValidator.cs
+│           └── GetStudentCourses/
+│               ├── GetStudentCoursesQuery.cs
+│               ├── GetStudentCoursesQueryHandler.cs
+│               └── GetStudentCoursesValidator.cs
+├── Abstractions/
+│   └── CQRS/
+│       ├── ICommand.cs
+│       ├── ICommandHandler.cs
+│       ├── IQuery.cs
+│       └── IQueryHandler.cs
+|
+└── Interfaces/
+    └── Identity/
+        ├── ITokenService.cs
+        ├── IBaseRepository.cs
+        ├── ICourseRepository.cs
+        ├── IDepartmentRepository.cs
+        ├── IStudentRepository.cs
+        └── IUnitOfWork.cs
 
-```
+
 ---
 
 ## ✨ Features
