@@ -28,7 +28,7 @@ A personal .NET 8 Web API project that manages university operations (students, 
 ## 🧱 Project Architecture
 
 ```
-CQRSUniversitySystem.Application Project Structure
+
 📁 CQRSUniversitySystem.Application
 ├── Features/
 │   ├── Auth/
@@ -118,7 +118,7 @@ CQRSUniversitySystem.Application Project Structure
         ├── IStudentRepository.cs
         └── IUnitOfWork.cs
 
-
+```
 ---
 
 ## ✨ Features
@@ -176,7 +176,11 @@ dotnet ef database update
 ---
 
 ## 🖼️ Screenshots
-- Screenshots will be added in /screenshots/ folder (coming soon)
+
+![Home](screenshots/cqrs1.png)
+![Home](screenshots/cqrs2.png)
+
+
 
 ---
 
