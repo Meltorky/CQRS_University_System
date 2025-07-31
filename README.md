@@ -9,7 +9,7 @@
 
 A personal .NET 8 Web API project that manages university operations (students, courses, departments, and authentication) using **CQRS**, **MediatR**, **EF Core**, and **ASP.NET Identity**. Built with Clean Architecture (4-Tier) for scalability, maintainability, and separation of concerns.
 
-✅ Swagger docs available at https://cqrs-university.runasp.net/index.html
+✅ Swagger docs available at https://cqrs-university.runasp.net
 
 ---
 
@@ -162,7 +162,7 @@ A personal .NET 8 Web API project that manages university operations (students, 
 dotnet ef database update
 ```
 
-✅ Swagger docs available at https://cqrs-university.runasp.net/index.html
+✅ Swagger docs available at https://cqrs-university.runasp.net
 
 ---
 
